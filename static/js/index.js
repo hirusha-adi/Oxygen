@@ -1,30 +1,45 @@
 function promalert() {
     swal({
-        title: "Require Email!",
-        text: "Enter your email address:",
+        title: "Add New Videos",
+        text: "Enter video URLs in seperate lines",
         type: "input",
         showCancelButton: true,
         closeOnConfirm: false,
         animation: "slide-from-top",
-        inputPlaceholder: "Your Email address"
+        inputPlaceholder: "URLs..."
     },
 
         function (inputValue) {
             if (inputValue === false)
                 return false;
             if (inputValue === "") {
-                swal.showInputError("Please enter email!");
-                return false
+                swal.showInputError("Please enter a URL");
+                return false;
             }
-            swal("Action Saved!", "You entered following email: " + inputValue, "success");
+            urlCount = inputValue.split(/\r?\n/);
+
+            if (urlCount.length == 1) {
+                correct_tense = " URL"
+            } else {
+                correct_tense = " URLs"
+            }
+            swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
         });
 }
 
 $(document).ready(function () {
 
-    $(document).on("click", "button#testing123",
+    // enter link
+    $(document).on("click", "a#addNewVideoButton, a#addNewVideoDropdown",
         function () {
             promalert();
+        }
+    )
+
+    // paste link
+    $(document).on("click", "",
+        function () {
+            return true;
         }
     )
 
