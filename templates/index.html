@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}
+<script src="{{ url_for('static', filename='js/lib/sweetalert-dev.js') }}"></script>
+<link href="{{ url_for('static', filename='css/lib/sweetalert.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
 <div id="wb_ThreeColumns" id="wrapper" class="wrapper">
@@ -82,9 +87,45 @@
                 </table>
             </div>
             <div class="col-3">
+                <button id="testing123">Show prompt alert</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+
+    function promalert() {
+        swal({
+            title: "Require Email!",
+            text: "Enter your email address:",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Your Email address"
+        },
+
+            function (inputValue) {
+                if (inputValue === false)
+                    return false;
+                if (inputValue === "") {
+                    swal.showInputError("Please enter email!");
+                    return false
+                }
+                swal("Action Saved!", "You entered following email: " + inputValue, "success");
+            });
+    }
+
+    $(document).ready(function () {
+
+        $(document).on("click", "button#testing123",
+            function () {
+                promalert();
+            }
+        )
+
+    })
+</script>
 
 {% endblock %}
