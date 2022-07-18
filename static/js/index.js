@@ -44,16 +44,22 @@ function getClipboard(show_popups = false) {
     try {
         navigator.clipboard.read()
             .then(text => {
+                text = String(text)
                 urlCount = text.split(/\r?\n/);
                 if (urlCount.length == 1) {
                     correct_tense = " URL"
                 } else {
                     correct_tense = " URLs"
                 }
-                if (show_popups == true) {
-                    swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
+
+                if (text.startsWith('http') == true) {
+                    if (show_popups == true) {
+                        swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
+                    }
+                    return workingLinks;
+                } else {
+                    swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
                 }
-                return text;
             })
             .catch(err => {
                 if (show_popups == true) {
@@ -103,7 +109,7 @@ function autoImportURLsFunc() {
 // Clipboard
 var autoImportURLs = setInterval(
     autoImportURLsFunc,
-    500
+    3000
 )
 
 $(document).ready(function () {
@@ -127,7 +133,6 @@ $(document).ready(function () {
     // auto paste link
     $(document).on("click", "a#autoImportURLsButton, a#autoImportURLsDropdown",
         function () {
-            console.log('before ' + autoImportingStatus)
             if (autoImportingStatus === true) {
                 $("a#autoImportURLsDropdown").text("Start auto-importing URLs from Clipboard")
                 autoImportingStatus = false;
@@ -135,7 +140,6 @@ $(document).ready(function () {
                 $("a#autoImportURLsDropdown").text("Stop auto-importing URLs from Clipboard")
                 autoImportingStatus = true;
             }
-            console.log('after ' + autoImportingStatus)
         }
     )
 
