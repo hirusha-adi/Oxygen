@@ -31,7 +31,7 @@ function inputVideoURLs() {
 
 }
 
-function pasteURLs() {
+function getClipboard(show_popups = false) {
     try {
         navigator.clipboard.read()
             .then(text => {
@@ -41,19 +41,31 @@ function pasteURLs() {
                 } else {
                     correct_tense = " URLs"
                 }
-                swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
-                URL_TEXT = text;
+                if (show_popups == true) {
+                    swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
+                }
                 return text;
             })
             .catch(err => {
-                swal("an Error has occured", err, "error");
+                if (show_popups == true) {
+                    swal("an Error has occured", err, "error");
+                }
                 return false;
             });
     } catch (e) {
         if (e instanceof TypeError) {
-            swal("Clipboard Access Blocked", e, "error");
+            if (show_popups == true) {
+                swal("Clipboard Access Blocked", e, "error");
+            }
         }
         return false;
+    }
+}
+
+function pasteURLs() {
+    text = getClipboard(show_popups = true)
+    if (URL_TEXT != false) {
+        URL_TEXT = text;
     }
 }
 
