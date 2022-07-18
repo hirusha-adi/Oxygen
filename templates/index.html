@@ -4,18 +4,34 @@
 <head>
     <meta charset="utf-8">
     <title>Untitled Page</title>
-    <meta name="generator" content="WYSIWYG Web Builder 16 - https://www.wysiwygwebbuilder.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/libraries/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/lib/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/oxygen.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', filename='js/libraries/jquery-1.12.4.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/util.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/collapse.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/collapse.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/libraries/collapse.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/lib/collapse.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/dropdown.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/lib/util.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $('#navigationMenu .dropdown-toggle').dropdown({ popperConfig: { placement: 'bottom-start', modifiers: { computeStyle: { gpuAcceleration: false } } } });
+            $(document).on('click', '.navigationMenu-navbar-collapse.show', function (e) {
+                if ($(e.target).is('a') && ($(e.target).attr('class') != 'dropdown-toggle')) {
+                    $(this).collapse('hide');
+                }
+            });
+
+            $('#ThemeableMenu1 .dropdown-toggle').dropdown({ popperConfig: { placement: 'bottom-start', modifiers: { computeStyle: { gpuAcceleration: false } } } });
+            $(document).on('click', '.ThemeableMenu1-navbar-collapse.show', function (e) {
+                if ($(e.target).is('a') && ($(e.target).attr('class') != 'dropdown-toggle')) {
+                    $(this).collapse('hide');
+                }
+            });
+
+        });
+    </script>
 </head>
 
 <body>
