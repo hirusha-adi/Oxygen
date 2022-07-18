@@ -1,10 +1,10 @@
 from flask import Flask, render_template
-app = Flask()
+app = Flask(__name__)
 
 
-@app.roue("/")
+@app.route("/")
 def index():
-    render_template("index.html")
+    return render_template("index.html")
 
 
 app.run()
