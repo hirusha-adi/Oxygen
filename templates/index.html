@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <title>Untitled Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS Import from flask -->
     <link href="{{ url_for('static', filename='css/lib/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/oxygen.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
 
-    <!-- Import from flask -->
+    <!-- JS Import from flask -->
     <!-- -------------------------------------------------------------------------------------------------------- -->
     <script src="{{ url_for('static', filename='js/lib/jquery-1.12.4.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/lib/popper.min.js') }}"></script>
@@ -17,9 +19,10 @@
     <script src="{{ url_for('static', filename='js/lib/collapse.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/lib/dropdown.min.js') }}"></script>
 
-    <!-- Import from CDNs -->
+    <!-- JS Import from CDNs -->
     <!-- -------------------------------------------------------------------------------------------------------- -->
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    <!-- 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/cjs/popper.min.js"></script>
@@ -27,7 +30,8 @@
     <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/collapse.min.js"></script>
     <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script> -->
+        src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/dropdown.min.js"></script>
+    -->
 
     <script>
         $(document).ready(function () {
