@@ -1,4 +1,10 @@
 var URL_TEXT = false;
+var URL_TEXT_last = false;
+
+var CLIPBOARD_URL_TEXT = false;
+var CLIPBOARD_URL_TEXT_last = false;
+
+var autoImportingStatus = false;
 
 function inputVideoURLs() {
     swal(
@@ -18,17 +24,20 @@ function inputVideoURLs() {
                 swal.showInputError("Please enter a URL");
                 return false;
             }
-            URL_TEXT = inputValue
-            urlCount = inputValue.split(/\r?\n/);
-            if (urlCount.length == 1) {
-                correct_tense = " URL"
+            if (inputValue.startsWith("http") == true) {
+                URL_TEXT = inputValue
+                urlCount = inputValue.split(/\r?\n/);
+                if (urlCount.length == 1) {
+                    correct_tense = " URL"
+                } else {
+                    correct_tense = " URLs"
+                }
+                swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
             } else {
-                correct_tense = " URLs"
+                swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
             }
-            swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
         }
     );
-
 }
 
 function getClipboard(show_popups = false) {
@@ -67,7 +76,18 @@ function pasteURLs() {
     if (URL_TEXT != false) {
         URL_TEXT = text;
     }
+    return text
 }
+
+function autoImportURLsFunc() {
+    console.log('hirusha')
+}
+
+// Clipboard
+// var autoImportURLs = setInterval(
+//     autoImportURLsFunc,
+//     5000
+// )
 
 $(document).ready(function () {
 
@@ -84,6 +104,18 @@ $(document).ready(function () {
         function () {
             pasteURLs();
             console.log(URL_TEXT);
+        }
+    )
+
+    $(document).on("click", "a#autoImportURLsButton, a#autoImportURLsDropdown",
+        function () {
+            if (autoImportingStatus == true) {
+                $("a#autoImportURLsDropdown").text("Start auto-importing URLs from Clipboard")
+                autoImportingStatus = false;
+            } else {
+                $("a#autoImportURLsDropdown").text("Stop auto-importing URLs from Clipboard")
+                autoImportingStatus = true;
+            }
         }
     )
 
