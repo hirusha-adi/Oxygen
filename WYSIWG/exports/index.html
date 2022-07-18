@@ -30,6 +30,66 @@
          });
       });
    </script>
+   <style>
+      #content-wrap {
+         padding-bottom: 2.5rem;
+         /* Footer height */
+      }
+
+      #footer {
+         /*position: bottom;*/
+         left: 0;
+         bottom: 0;
+         width: 100%;
+         background-color: red;
+         color: white;
+         text-align: center;
+         flex: 0 0 auto;
+         /*add*/
+      }
+
+      body {
+         margin: 0px;
+         min-height: 50%;
+         padding: 0px;
+         position: absolute;
+         width: 100%;
+         height: 100vh;
+         /*add*/
+      }
+
+
+      .main {
+         display: flex;
+         /*add*/
+         flex-direction: column;
+         /*add*/
+         min-height: 100%;
+         /*add*/
+      }
+
+      .wrapper {
+         height: 100%;
+         /*add*/
+         flex: 1 0 auto;
+         /*add*/
+      }
+
+
+      h1 {
+         margin-bottom: 0.5rem;
+         margin-right: 8.5rem;
+         /* font-style: unset; */
+         font-weight: 300;
+         color: aliceblue;
+         font-family: 'Amatic SC', cursive;
+      }
+
+      .py-4 {
+         padding-bottom: 0.5rem;
+         padding-top: 0.5rem;
+      }
+   </style>
 </head>
 
 <body>
@@ -151,7 +211,7 @@
          </div>
       </div>
    </div>
-   <div id="wb_ThreeColumns">
+   <div id="wb_ThreeColumns" id="wrapper" class="wrapper">
       <div id="ThreeColumns-overlay"></div>
       <div id="ThreeColumns">
          <div class="row">
