@@ -80,14 +80,31 @@ function pasteURLs() {
 }
 
 function autoImportURLsFunc() {
-    console.log('hirusha')
+    if (autoImportingStatus == true) {
+        console.log('Auto On')
+        CLIPBOARD_URL_TEXT = getClipboard(show_popups = false)
+        if (CLIPBOARD_URL_TEXT_last == false) {
+            CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
+        } else if (CLIPBOARD_URL_TEXT == CLIPBOARD_URL_TEXT_last) {
+            return
+        } else {
+            CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
+            if (CLIPBOARD_URL_TEXT.startsWith("http") == true) {
+                // ADD VIDEO
+            } else {
+                return
+            }
+        }
+    } else {
+        return
+    }
 }
 
 // Clipboard
-// var autoImportURLs = setInterval(
-//     autoImportURLsFunc,
-//     5000
-// )
+var autoImportURLs = setInterval(
+    autoImportURLsFunc,
+    500
+)
 
 $(document).ready(function () {
 
@@ -107,15 +124,18 @@ $(document).ready(function () {
         }
     )
 
+    // auto paste link
     $(document).on("click", "a#autoImportURLsButton, a#autoImportURLsDropdown",
         function () {
-            if (autoImportingStatus == true) {
+            console.log('before ' + autoImportingStatus)
+            if (autoImportingStatus === true) {
                 $("a#autoImportURLsDropdown").text("Start auto-importing URLs from Clipboard")
                 autoImportingStatus = false;
             } else {
                 $("a#autoImportURLsDropdown").text("Stop auto-importing URLs from Clipboard")
                 autoImportingStatus = true;
             }
+            console.log('after ' + autoImportingStatus)
         }
     )
 
