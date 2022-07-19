@@ -106,11 +106,7 @@ function autoImportURLsFunc() {
             return false
         } else {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
-            if (CLIPBOARD_URL_TEXT.startsWith("http") == true) {
-                // ADD VIDEO
-            } else {
-                return false
-            }
+            processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
         }
     } else {
         return false
