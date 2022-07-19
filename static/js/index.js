@@ -123,24 +123,46 @@ var autoImportURLs = setInterval(
     3000
 )
 
-function processVideoURLSandAdd(text_ = "") {
+function addUrl() { }
+
+function processVideoURLSandAdd(text_ = "", show_popups = false) {
+    var final_to_add = []
+    var __text = ""
     if (text_ == "") {
         if (URL_TEXT == false) {
-            swal("an Error has occured", "No input has been provided yet.", "error");
+            if (show_popups == true) {
+                swal("an Error has occured", "No input has been provided yet.", "error");
+            }
         } else {
-            // try to split for multiple urls by new lines
-            // for each each url
-            //      if url not in already added list
-            //          add url to added list
-            //          add url to temp list to add at the end of this function
+            __text = String(URL_TEXT)
         }
     } else {
-        // use text_
+        __text = String(text_)
     }
 
-    // for each url in temp list
-    //      add URL to download list
-    return 0;
+    __textSplitted = __text.split(/\r?\n/)
+    for (i in __textSplitted) {
+        if (ADDED_LIST.includes(__textSplitted[i]) == true) {
+            if (final_to_add.includes(__textSplitted[i]) == false) {
+                final_to_add.push(__textSplitted[i])
+            }
+            if (__textSplitted.length == 1) {
+                if (show_popups == true) {
+                    swal("an Error has occured", "The URL you provided has already been added", "error");
+                }
+            }
+        } else {
+            ADDED_LIST.push(__textSplitted[i])
+            if (final_to_add.includes(__textSplitted[i]) == false) {
+                final_to_add.push(__textSplitted[i])
+            }
+        }
+    }
+
+    for (i in final_to_add) {
+        addUrl(final_to_add[i])
+    }
+
 }
 
 // main jquery code
