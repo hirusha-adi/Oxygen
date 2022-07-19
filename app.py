@@ -7,17 +7,15 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/log/debug", methods=['POST'])
-def log_debug():
+@app.route("/log/<mode>", methods=['POST'])
+def log(mode):
     message = request.form.get('message')
-    print("DEBUG: ", message)
-    return "ok"
-
-
-@app.route("/log/error", methods=['POST'])
-def log_debug():
-    message = request.form.get('message')
-    print("ERROR: ", message)
+    if mode == "debug":
+        print("DEBUG: ", message)
+    elif mode == "error":
+        print("ERROR: ", message)
+    else:
+        print(message)
     return "ok"
 
 
