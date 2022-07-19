@@ -1,5 +1,4 @@
 var URL_TEXT = false;
-var URL_TEXT_last = false;
 
 var CLIPBOARD_URL_TEXT = false;
 var CLIPBOARD_URL_TEXT_last = false;
@@ -9,6 +8,7 @@ var autoImportingStatus = false;
 var ADDED_LIST = []
 
 // put input to main variable
+// set value to URL_TEXT
 function inputVideoURLs() {
     $.post(
         '/log/debug',
@@ -29,8 +29,8 @@ function inputVideoURLs() {
                 return false;
             if (inputValue === "") {
                 $.post(
-                    '/log/debug',
-                    { "message": "User has entered: ''" }
+                    '/log/error',
+                    { "message": "User has NOT entered anything!" }
                 )
                 swal.showInputError("Please enter a URL");
                 return false;
@@ -62,6 +62,7 @@ function inputVideoURLs() {
 
 
 // return value of clipboard
+// does NOT set to any var, just returns
 function getClipboard(show_popups = false) {
     try {
         navigator.clipboard.readText()
@@ -78,11 +79,11 @@ function getClipboard(show_popups = false) {
                     if (show_popups == true) {
                         swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
                     }
-                    console.log(text)
                     return text;
                 } else {
-                    swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
-                    console.log(text)
+                    if (show_popups == true) {
+                        swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
+                    }
                 }
             })
             .catch(err => {
@@ -103,6 +104,7 @@ function getClipboard(show_popups = false) {
 
 
 // put clipboard value to main variable
+// if the output is correct
 function pasteURLs() {
     text = getClipboard(show_popups = true)
     if (URL_TEXT != false) {
@@ -114,25 +116,29 @@ function pasteURLs() {
 // monitor the clipboard for changes and if a url, add it
 function autoImportURLsFunc() {
     if (autoImportingStatus == true) {
-        console.log('Auto On')
         CLIPBOARD_URL_TEXT = getClipboard(show_popups = false)
+
         if (CLIPBOARD_URL_TEXT_last == false) {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
-        } else if (CLIPBOARD_URL_TEXT == CLIPBOARD_URL_TEXT_last) {
-            return false
+        } else if (CLIPBOARD_URL_TEXT == undefined) {
+            // ERROR GETTING CLIPBOARD CONTENT PROPERLY
+            console.log('old ' + CLIPBOARD_URL_TEXT_last + ' new ' + CLIPBOARD_URL_TEXT_last)
         } else {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
-            processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
+            $.post(
+                '/log/debug',
+                { "message": "New Clipboard Content" + CLIPBOARD_URL_TEXT }
+            )
+            // processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
         }
-    } else {
-        return false
     }
 }
+
 
 // keep running auto import urls in background
 var autoImportURLs = setInterval(
     autoImportURLsFunc,
-    3000
+    5000
 )
 
 function addUrl() { }
