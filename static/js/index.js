@@ -122,14 +122,14 @@ function autoImportURLsFunc() {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
         } else if (CLIPBOARD_URL_TEXT == undefined) {
             // ERROR GETTING CLIPBOARD CONTENT PROPERLY
-            console.log('old ' + CLIPBOARD_URL_TEXT_last + ' new ' + CLIPBOARD_URL_TEXT_last)
+            // console.log('old ' + CLIPBOARD_URL_TEXT_last + ' new ' + CLIPBOARD_URL_TEXT_last)
         } else {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
             $.post(
                 '/log/debug',
                 { "message": "New Clipboard Content" + CLIPBOARD_URL_TEXT }
             )
-            // processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
+            processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
         }
     }
 }
@@ -157,22 +157,26 @@ function processVideoURLSandAdd(text_ = "", show_popups = false) {
     } else {
         __text = String(text_)
     }
-
     __textSplitted = __text.split(/\r?\n/)
     for (i in __textSplitted) {
-        if (ADDED_LIST.includes(__textSplitted[i]) == true) {
-            if (final_to_add.includes(__textSplitted[i]) == false) {
-                final_to_add.push(__textSplitted[i])
-            }
-            if (__textSplitted.length == 1) {
-                if (show_popups == true) {
-                    swal("an Error has occured", "The URL you provided has already been added", "error");
+        if (__textSplitted[i].startsWith('http')) {
+            if (ADDED_LIST.includes(__textSplitted[i]) == true) {
+                if (__textSplitted.length == 1) { // Already added warning only if 1 URL
+                    if (show_popups == true) {
+                        swal("an Error has occured", "The URL you provided has already been added", "error");
+                    }
+                }
+            } else {
+                ADDED_LIST.push(__textSplitted[i])
+                if (final_to_add.includes(__textSplitted[i]) == false) {
+                    final_to_add.push(__textSplitted[i])
                 }
             }
         } else {
-            ADDED_LIST.push(__textSplitted[i])
-            if (final_to_add.includes(__textSplitted[i]) == false) {
-                final_to_add.push(__textSplitted[i])
+            if (__textSplitted.length == 1) { // no proper url warning
+                if (show_popups == true) {
+                    swal("an Error has occured", "The URL you provided has already been added", "error");
+                }
             }
         }
     }
@@ -181,6 +185,7 @@ function processVideoURLSandAdd(text_ = "", show_popups = false) {
         addUrl(final_to_add[i])
     }
 
+    final_to_add = []
 }
 
 // main jquery code
@@ -189,7 +194,9 @@ $(document).ready(function () {
     // enter link
     $(document).on("click", "a#addNewVideoButton, a#addNewVideoDropdown",
         function () {
-            inputVideoURLs();
+            // inputVideoURLs();
+            URL_TEXT = 'https://hirusha.xyz'
+            processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
         }
     )
 
