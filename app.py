@@ -8,12 +8,22 @@ def index():
 
 
 @app.route("/log/debug", methods=['POST'])
+def log_debug():
+    message = request.form.get('message')
+    print("DEBUG: ", message)
+    return "ok"
+
+
 @app.route("/log/error", methods=['POST'])
 def log_debug():
     message = request.form.get('message')
-    print(message)
+    print("ERROR: ", message)
     return "ok"
 
 
 if __name__ == "__main__":
-    app.run('0.0.0.0', port=8090, debug=True)
+    app.run(
+        '0.0.0.0',
+        port=8090,
+        debug=True
+    )
