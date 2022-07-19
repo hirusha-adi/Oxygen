@@ -10,6 +10,10 @@ var ADDED_LIST = []
 
 // put input to main variable
 function inputVideoURLs() {
+    $.post(
+        '/log/debug',
+        { "message": "Asking for URL" }
+    )
     swal(
         {
             title: "Add New Videos",
@@ -24,6 +28,10 @@ function inputVideoURLs() {
             if (inputValue === false)
                 return false;
             if (inputValue === "") {
+                $.post(
+                    '/log/debug',
+                    { "message": "User has entered: ''" }
+                )
                 swal.showInputError("Please enter a URL");
                 return false;
             }
@@ -35,8 +43,16 @@ function inputVideoURLs() {
                 } else {
                     correct_tense = " URLs"
                 }
+                $.post(
+                    '/log/debug',
+                    { "message": "User has entered " + urlCount.length + correct_tense }
+                )
                 swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
             } else {
+                $.post(
+                    '/log/error',
+                    { "message": "User has not enetered a URL" }
+                )
                 swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
             }
         }
@@ -168,7 +184,6 @@ $(document).ready(function () {
     $(document).on("click", "a#addNewVideoButton, a#addNewVideoDropdown",
         function () {
             inputVideoURLs();
-            console.log(URL_TEXT)
         }
     )
 
