@@ -125,10 +125,8 @@ var autoImportURLs = setInterval(
 
 function processVideoURLSandAdd(text_ = "") {
     if (text_ == "") {
-        // use text_
-    } else {
         if (URL_TEXT == false) {
-            // no input given yet
+            swal("an Error has occured", "No input has been provided yet.", "error");
         } else {
             // try to split for multiple urls by new lines
             // for each each url
@@ -136,11 +134,12 @@ function processVideoURLSandAdd(text_ = "") {
             //          add url to added list
             //          add url to temp list to add at the end of this function
         }
+    } else {
+        // use text_
     }
 
     // for each url in temp list
     //      add URL to download list
-
     return 0;
 }
 
