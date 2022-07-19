@@ -6,6 +6,9 @@ var CLIPBOARD_URL_TEXT_last = false;
 
 var autoImportingStatus = false;
 
+var ADDED_LIST = []
+
+// put input to main variable
 function inputVideoURLs() {
     swal(
         {
@@ -40,9 +43,12 @@ function inputVideoURLs() {
     );
 }
 
+
+
+// return value of clipboard
 function getClipboard(show_popups = false) {
     try {
-        navigator.clipboard.read()
+        navigator.clipboard.readText()
             .then(text => {
                 text = String(text)
                 urlCount = text.split(/\r?\n/);
@@ -56,9 +62,11 @@ function getClipboard(show_popups = false) {
                     if (show_popups == true) {
                         swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
                     }
-                    return workingLinks;
+                    console.log(text)
+                    return text;
                 } else {
                     swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
+                    console.log(text)
                 }
             })
             .catch(err => {
@@ -77,6 +85,8 @@ function getClipboard(show_popups = false) {
     }
 }
 
+
+// put clipboard value to main variable
 function pasteURLs() {
     text = getClipboard(show_popups = true)
     if (URL_TEXT != false) {
@@ -85,6 +95,7 @@ function pasteURLs() {
     return text
 }
 
+// monitor the clipboard for changes and if a url, add it
 function autoImportURLsFunc() {
     if (autoImportingStatus == true) {
         console.log('Auto On')
@@ -106,12 +117,13 @@ function autoImportURLsFunc() {
     }
 }
 
-// Clipboard
+// keep running auto import urls in background
 var autoImportURLs = setInterval(
     autoImportURLsFunc,
     3000
 )
 
+// main jquery code
 $(document).ready(function () {
 
     // enter link
