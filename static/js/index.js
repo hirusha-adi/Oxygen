@@ -103,17 +103,17 @@ function autoImportURLsFunc() {
         if (CLIPBOARD_URL_TEXT_last == false) {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
         } else if (CLIPBOARD_URL_TEXT == CLIPBOARD_URL_TEXT_last) {
-            return
+            return false
         } else {
             CLIPBOARD_URL_TEXT_last = CLIPBOARD_URL_TEXT
             if (CLIPBOARD_URL_TEXT.startsWith("http") == true) {
                 // ADD VIDEO
             } else {
-                return
+                return false
             }
         }
     } else {
-        return
+        return false
     }
 }
 
@@ -122,6 +122,27 @@ var autoImportURLs = setInterval(
     autoImportURLsFunc,
     3000
 )
+
+function processVideoURLSandAdd(text_ = "") {
+    if (text_ == "") {
+        // use text_
+    } else {
+        if (URL_TEXT == false) {
+            // no input given yet
+        } else {
+            // try to split for multiple urls by new lines
+            // for each each url
+            //      if url not in already added list
+            //          add url to added list
+            //          add url to temp list to add at the end of this function
+        }
+    }
+
+    // for each url in temp list
+    //      add URL to download list
+
+    return 0;
+}
 
 // main jquery code
 $(document).ready(function () {
