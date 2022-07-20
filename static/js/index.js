@@ -203,13 +203,17 @@ function addUrl(_url) {
                                 published="${data['published']}"
                                 site="${data['site']}"
                                 thumbnail="${data['thumbnail']}"
-                                title="${data['title']}"
+                                title="${data['title'].replace(/"/g, "'")}"
                                 views="${data['views']}"
                                 >
                                     View More
                             </a>
                             &nbsp;|&nbsp;
-                            <a class="channel" link=${data['url']}>
+                            <a class="channel" 
+                                vlink="${data['url']}" 
+                                vtitle="${data['title'].replace(/"/g, "'")}"
+                                onclick="selectQualityAndDownload(this)"
+                                >
                                     Download
                             </a>
                         </div>
@@ -310,8 +314,138 @@ function viewMoreDetailsOnVideo(identifier) {
 
 // quality select in popup and download
 function selectQualityAndDownload(identifier) {
-    const link = $(identifier).attr('link')
-    return
+    const vlink = $(identifier).attr('vlink')
+    const vtitle = $(identifier).attr('vtitle')
+
+    swal(
+        {
+            title: "Add New Videos",
+            text: "Enter video URLs in seperate lines",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "1, 2, 3, 4, 5, 6, 7"
+        },
+        function (inputValue) {
+            inputValue = String(inputValue)
+
+            const validInputs = ["1", "2", "3", "4", "5", "6", "7", "8"]
+            const qualities = ["240p", "360p", "480p", "720p", "1080p", "1440p", "2160p", "music", "song", "mp3", "mp4", "audio"]
+            const qualitiesP = ["240", "360", "480", "720", "1080", "1440", "2160"]
+
+            if (inputValue === false)
+                return false;
+            if ((validInputs.includes(inputValue) == false) || (qualities.includes(inputValue) == false) || (qualitiesP.includes(inputValue) == false)) {
+                swal.showInputError("Please enter a valid number!");
+                return false;
+            } else {
+                let quality = ""
+                // if number is entered - validInputs
+                if (validInputs.includes(inputValue) == true) {
+                    switch (inputValue) {
+                        case "1":
+                            quality = "240p"
+                            break;
+                        case "2":
+                            quality = "360p"
+                            break;
+                        case "3":
+                            quality = "480p"
+                            break;
+                        case "4":
+                            quality = "720p"
+                            break;
+                        case "5":
+                            quality = "1080p"
+                            break;
+                        case "6":
+                            quality = "1440p"
+                            break;
+                        case "7":
+                            quality = "2160p"
+                            break;
+                        default:
+                            quality = "720p"
+                            swal("Invalid input", "Defaulting to default quality: 720p", "info");
+                    }
+                } else if (qualities.includes(inputValue) == true) {
+                    switch (inputValue) {
+                        case "240p":
+                            quality = "240p"
+                            break;
+                        case "360p":
+                            quality = "360p"
+                            break;
+                        case "480p":
+                            quality = "480p"
+                            break;
+                        case "720p":
+                            quality = "720p"
+                            break;
+                        case "1080p":
+                            quality = "1080p"
+                            break;
+                        case "1440p":
+                            quality = "1440p"
+                            break;
+                        case "2160p":
+                            quality = "2160p"
+                            break;
+                        case "mp4":
+                            quality = "720p"
+                            break;
+                        case "music":
+                            quality = "audio"
+                            break;
+                        case "song":
+                            quality = "audio"
+                            break;
+                        case "mp3":
+                            quality = "audio"
+                            break;
+                        case "audio":
+                            quality = "audio"
+                            break;
+                        default:
+                            quality = "720p"
+                            swal("Invalid input", "Defaulting to default quality: 720p", "info");
+                    }
+                } else if ((qualitiesP).includes(inputValue) == true) {
+                    switch (inputValue) {
+                        case "240p":
+                            quality = "240p"
+                            break;
+                        case "360p":
+                            quality = "360p"
+                            break;
+                        case "480p":
+                            quality = "480p"
+                            break;
+                        case "720p":
+                            quality = "720p"
+                            break;
+                        case "1080p":
+                            quality = "1080p"
+                            break;
+                        case "1440p":
+                            quality = "1440p"
+                            break;
+                        case "2160p":
+                            quality = "2160p"
+                            break;
+                        default:
+                            quality = "720p"
+                            swal("Invalid input", "Defaulting to default quality: 720p", "info");
+                    }
+                } else {
+                    swal("Invalid input", "Defaulting to default quality: 720p", "info");
+                    quality = "720p"
+                }
+                swal("Downloading!", "Downloading video with " + quality, "success");
+            }
+        }
+    );
 
 }
 
@@ -327,6 +461,7 @@ $(document).ready(function () {
             // Why the F doesn't thing work? - it works when inside `inputVideoURLs()`
             // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
             // addUrl('')
+
         }
     )
 
