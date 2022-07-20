@@ -3,6 +3,178 @@
 {% block header %}
 <script src="{{ url_for('static', filename='js/lib/sweetalert-dev.js') }}"></script>
 <link href="{{ url_for('static', filename='css/lib/sweetalert.css') }}" rel="stylesheet">
+
+<style>
+    :root {
+        --primary: #fbfcfc;
+        --active: #f1f1f1;
+        --secondary: #767777;
+        --b-pad: 10px;
+        --s-pad: 5px;
+        --bg: rgb(50, 50, 50);
+    }
+
+    a.channel {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    a.channel:hover {
+        text-decoration: underline;
+    }
+
+    .title {
+        color: var(--secondary);
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .sub-title {
+        color: var(--grey);
+        font-size: 13px;
+    }
+
+    .icon-active {
+        filter: sepia(100%) hue-rotate(150deg) saturate(400%);
+    }
+
+    #playlist {
+        top: 50%;
+        left: 50%;
+        width: 80vw;
+        height: 60vh;
+        display: flex;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        transition: all ease 0.3s;
+    }
+
+    #video-dis {
+        flex: 6.5;
+        margin-right: 20px;
+        background: black;
+    }
+
+    #video-dis iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-li {
+        flex: 3.5;
+        display: flex;
+        padding: var(--b-pad);
+        border-radius: 3px;
+        flex-direction: column;
+        background: var(--primary);
+    }
+
+    .li-collapsed {
+        overflow: hidden;
+        height: 40px;
+    }
+
+    #vli-info {
+        flex: 3;
+        padding: 0 var(--b-pad) 0 var(--b-pad);
+    }
+
+    #upper-info {
+        display: flex;
+    }
+
+    #li-titles {
+        flex: 9;
+    }
+
+    #li-titles div {
+        padding-bottom: 5px;
+    }
+
+
+    #lower-info div {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    #vli-videos {
+        flex: 7;
+        overflow: auto;
+    }
+
+    .video-con {
+        display: flex;
+        cursor: pointer;
+        padding: var(--s-pad);
+        column-gap: var(--s-pad);
+        margin-bottom: var(--b-pad);
+    }
+
+    .video-con:hover,
+    .active-con {
+        background: var(--active);
+    }
+
+    .index {
+        min-width: 15px;
+        align-self: center;
+    }
+
+    .thumb {
+        width: 100px;
+        height: 60px;
+        background: var(--secondary);
+    }
+
+    .thumb img {
+        width: 100%;
+    }
+
+    .v-titles {
+        flex: 6;
+    }
+
+    .v-titles div:nth-child(2) {
+        margin-top: var(--s-pad);
+    }
+
+    @media only screen and (max-width: 1150px) {
+        #playlist {
+            width: 95vw;
+            height: 60vh;
+        }
+    }
+
+    @media only screen and (max-width: 950px) {
+        #playlist {
+            top: 10%;
+            width: 50vw;
+            margin: 0 auto;
+            display: block;
+            align-items: center;
+            transform: translate(-50%, 0%);
+        }
+
+        #video-dis {
+            margin-bottom: var(--b-pad);
+            width: 100%;
+            height: 300px;
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        #playlist {
+            width: 60vw;
+        }
+    }
+
+    @media only screen and (max-width: 650px) {
+        #playlist {
+            width: 80vw;
+        }
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -14,79 +186,84 @@
             <div class="col-1">
             </div>
             <div class="col-2">
-                <table style="display:table;width:100%;height:182px;z-index:3;overflow-x: scroll;" id="StripedTable">
-                    <tr>
-                        <td class="cell0"><span
-                                style="color:#34495E;font-family:Arial;font-size:13px;"><strong>Thumbnail</strong></span>
-                        </td>
-                        <td class="cell0"><span
-                                style="color:#34495E;font-family:Arial;font-size:13px;"><strong>Name</strong></span>
-                        </td>
-                        <td class="cell0"><span
-                                style="color:#34495E;font-family:Arial;font-size:13px;"><strong>Quality</strong></span>
-                        </td>
-                        <td class="cell0"><span
-                                style="color:#34495E;font-family:Arial;font-size:13px;"><strong>Info<br></strong></span>
-                        </td>
-                        <td class="cell0"><span
-                                style="color:#34495E;font-family:Arial;font-size:13px;"><strong>Download</strong></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cell1"><img
-                                src="https://cdn.discordapp.com/attachments/752166331830239344/998288559771492422/unknown.png"
-                                alt="Image" height="36px" width="64px"></td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">Lorem
-                                ipsum</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">1977</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">8.8</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">777,100</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cell1"><img
-                                src="https://cdn.discordapp.com/attachments/752166331830239344/998288559771492422/unknown.png"
-                                alt="Image" height="36px" width="64px"></td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">Integer nec
-                                odio</span></td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">1978</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">7.4</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">888,800</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cell1"><img
-                                src="https://cdn.discordapp.com/attachments/752166331830239344/998288559771492422/unknown.png"
-                                alt="Image" height="36px" width="64px"></td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">Praesent
-                                libero</span></td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">1983</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">7.5</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">425,250</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="cell1"></td>
-                        <td class="cell2">
-                            <span style="color:#34495E;font-family:Arial;font-size:13px;">
-                                Duis sagittis ipsum
-                            </span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">1986</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">8.5</span>
-                        </td>
-                        <td class="cell2"><span style="color:#34495E;font-family:Arial;font-size:13px;">515,500</span>
-                        </td>
-                    </tr>
-                </table>
+
+                <div id="v-list" class="video-li">
+
+                    <div id="vli-videos">
+
+                        <!-- Active Video -->
+                        <div class="video-con active-con" video="https://www.youtube.com/embed/BVyTt3QJfIA">
+                            <div class="index title">0</div>
+                            <div class="thumb">
+                                <img src="https://i.ytimg.com/vi/BVyTt3QJfIA/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLDNZqTQuBOTuGgLFnsrstzTBdJhgg"
+                                    alt="">
+                            </div>
+                            <div class="v-titles">
+                                <div class="title">Google chrome custom new tab</div>
+                                <div class="sub-title">
+                                    <a href="https://www.youtube.com/channel/UCD7RHHe-SuFiTWEsC0S1dLg" class="channel"
+                                        target="_blank">Rejwan
+                                        Islam</a>
+                                </div>
+                                <div class="sub-title">
+                                    hgjhg
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="video-con" video="https://www.youtube.com/embed/O-D1VsX7J4s">
+                            <div class="index title">0</div>
+                            <div class="thumb">
+                                <img src="https://i.ytimg.com/vi/O-D1VsX7J4s/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLAmbtXY8Fuq9TWBwe9KPru9q6nnyg"
+                                    alt="">
+                            </div>
+                            <div class="v-titles">
+                                <div class="title">Awesome Periodic Table using Html and Css</div>
+                                <div class="sub-title">
+                                    <a href="https://www.youtube.com/channel/UCD7RHHe-SuFiTWEsC0S1dLg" class="channel"
+                                        target="_blank">Rejwan
+                                        Islam</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="video-con" video="https://www.youtube.com/embed/glqWxsQmY3U">
+                            <div class="index title">0</div>
+                            <div class="thumb">
+                                <img src="https://i.ytimg.com/vi/glqWxsQmY3U/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLA32gZV0D42Si70gSXZ3B4Aoz4P1w"
+                                    alt="">
+                            </div>
+                            <div class="v-titles">
+                                <div class="title">JavaScript Debugging - Android Button Effect</div>
+                                <div class="sub-title">
+                                    <a href="https://www.youtube.com/channel/UCD7RHHe-SuFiTWEsC0S1dLg" class="channel"
+                                        target="_blank">Rejwan
+                                        Islam</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="video-con" video="https://www.youtube.com/embed/Eg4hPSMRtds">
+                            <div class="index title">0</div>
+                            <div class="thumb">
+                                <img src="https://i.ytimg.com/vi/Eg4hPSMRtds/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBrnuS1go5YalWfku7pWWqScHvkkQ"
+                                    alt="">
+                            </div>
+                            <div class="v-titles">
+                                <div class="title">Calculator: Parallel and series resistance</div>
+                                <div class="sub-title">
+                                    <a href="https://www.youtube.com/channel/UCD7RHHe-SuFiTWEsC0S1dLg" class="channel"
+                                        target="_blank">Rejwan
+                                        Islam</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
             <div class="col-3">
             </div>
