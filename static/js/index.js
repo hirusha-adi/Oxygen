@@ -1,3 +1,7 @@
+/*
+Sweet Alert v1 Docs - https://sweetalert.js.org/guides/ 
+*/
+
 var URL_TEXT = false;
 
 var CLIPBOARD_URL_TEXT = false;
