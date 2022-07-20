@@ -7,6 +7,8 @@ var autoImportingStatus = false;
 
 var ADDED_LIST = []
 
+const logDebug = new WebSocket('ws://127.0.0.1:8090/echo');
+
 // put input to main variable
 // set value to URL_TEXT
 function inputVideoURLs() {
@@ -195,8 +197,9 @@ $(document).ready(function () {
     $(document).on("click", "a#addNewVideoButton, a#addNewVideoDropdown",
         function () {
             // inputVideoURLs();
-            URL_TEXT = 'https://hirusha.xyz'
-            processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
+            // URL_TEXT = 'https://hirusha.xyz'
+            // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
+            socket.send('HIRUSHA')
         }
     )
 
