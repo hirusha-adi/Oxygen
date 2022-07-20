@@ -276,7 +276,25 @@ function viewMoreDetailsOnVideo(identifier) {
         const duration = $(identifier).attr('duration')
         const published = $(identifier).attr('published')
         const views = $(identifier).attr('views')
+
+        swal(
+            {
+                title: `${count} | ${title}`,
+                text:
+                    `Uploaded by: ${byname}
+                    Duration: ${duration}
+                    Uploaded on: ${published}
+                    Views: ${views}
+
+                    Description: 
+                    ${description}`,
+                icon: thumbnail,
+            }
+        );
     }
+
+
+
 }
 
 // main jquery code
