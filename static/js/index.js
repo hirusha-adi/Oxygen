@@ -447,6 +447,9 @@ function selectQualityAndDownload(identifier) {
         }
     );
 
+    // send request to backend and start downloading the video
+    // change the download text to downloading...
+
 }
 
 
