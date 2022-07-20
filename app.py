@@ -13,6 +13,8 @@ class Utils:
     def getVideInfo(url):
         result = {}
 
+        result['count'] = 1
+
         # YoutubeDL - Get basic info
         youtube_dl_opts = {'verbose': True}
         with YoutubeDL(youtube_dl_opts) as ydl:
