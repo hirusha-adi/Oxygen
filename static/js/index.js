@@ -78,11 +78,19 @@ function getClipboard(show_popups = false) {
                 }
 
                 if (text.startsWith('http') == true) {
+                    $.post(
+                        '/log/debug',
+                        { "message": "You entered " + urlCount.length + correct_tense }
+                    )
                     if (show_popups == true) {
                         swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
                     }
                     return text;
                 } else {
+                    $.post(
+                        '/log/error',
+                        { "message": "Invalid URLs. All URLs must start with 'http' at front" }
+                    )
                     if (show_popups == true) {
                         swal("an Error has occured", "Invalid URLs. All URLs must start with 'http' at front", "error");
                     }
@@ -90,6 +98,10 @@ function getClipboard(show_popups = false) {
             })
             .catch(err => {
                 if (show_popups == true) {
+                    $.post(
+                        '/log/error',
+                        { "message": err }
+                    )
                     swal("an Error has occured", err, "error");
                 }
                 return false;
@@ -97,6 +109,10 @@ function getClipboard(show_popups = false) {
     } catch (e) {
         if (e instanceof TypeError) {
             if (show_popups == true) {
+                $.post(
+                    '/log/error',
+                    { "message": "Clipboard Access Blocked: " + e }
+                )
                 swal("Clipboard Access Blocked", e, "error");
             }
         }
