@@ -33,6 +33,7 @@ class Utils:
             result['views'] = video['viewCount']['text']
             result['thumbnail'] = video['thumbnails'][-1]['url']
             result['description'] = video['descriptionSnippet'][0]['text']
+            result['by'] = {}
             result['by']['name'] = video['channel']['name']
             result['by']['id'] = video['channel']['id']
             result['by']['image'] = video['channel']['thumbnails'][0]['url']
