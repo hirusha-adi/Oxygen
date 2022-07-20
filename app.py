@@ -1,5 +1,17 @@
 from flask import Flask, render_template, request
+from flask_socketio import SocketIO
+from flask_socketio import emit
+
 app = Flask(__name__)
+sock = Sock(app)
+
+
+@sock.route('/echo')
+def echo(sock):
+    while True:
+        data = str(sock.receive())
+        # sock.send(data)
+        print(data)
 
 
 @app.route("/")
