@@ -170,8 +170,8 @@ function addUrl(_url) {
         function (data) {
             console.log(data)
             $("div#vli-videos").append(`
-                <div class="video-con" video="${data['url']}">
-                    <div class="index title">${data['count']}</div>
+                <div class="video-con" video="${data['url']}" id="main${data['url']}">
+                    <div class="index title">${ADDED_LIST.length + 1}</div>
                     <div class="thumb">
                         <img src="${data['thumbnail']}" alt="">
                     </div>
@@ -182,10 +182,30 @@ function addUrl(_url) {
                                 target="_blank">
                                     ${data['by']['name']}
                             </a>
+                            &nbsp;|&nbsp;
+                            <a class="channel" 
+                                onclick="viewMoreDetailsOnVideo(this);"
+                                id="child${data['url']}" 
+                                byid="${data['by']['id']}"
+                                byimage="${data['by']['image']}"
+                                byname="${data['by']['name']}"
+                                count="${data['count']}"
+                                description="${data['description']}"
+                                duration="${data['duration_human']}"
+                                id="${data['id']}"
+                                published="${data['published']}"
+                                site="${data['site']}"
+                                thumbnail="${data['thumbnail']}"
+                                title="${data['title']}"
+                                views="${data['views']}"
+                                >
+                                    View More
+                            </a>
                         </div>
-                    </div>
                 </div>
                 `)
+
+
         }
     )
 }
@@ -233,6 +253,26 @@ function processVideoURLSandAdd(text_ = "", show_popups = false) {
     }
 
     final_to_add = []
+}
+
+function viewMoreDetailsOnVideo(identifier) {
+
+    const count = $(identifier).attr('count')
+    const id = $(identifier).attr('id')
+    const title = $(identifier).attr('title')
+    const thumbnail = $(identifier).attr('thumbnail')
+
+    const site = $(identifier).attr('site')
+
+    if (site == 'youtube') {
+        const byid = $(identifier).attr('byid')
+        const byname = $(identifier).attr('byname')
+        const byimage = $(identifier).attr('byimage')
+        const description = $(identifier).attr('description')
+        const duration = $(identifier).attr('duration')
+        const published = $(identifier).attr('published')
+        const views = $(identifier).attr('views')
+    }
 }
 
 // main jquery code
