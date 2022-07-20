@@ -7,7 +7,6 @@ var autoImportingStatus = false;
 
 var ADDED_LIST = []
 
-const logDebug = new WebSocket('ws://127.0.0.1:8090/echo');
 
 // put input to main variable
 // set value to URL_TEXT
@@ -50,6 +49,7 @@ function inputVideoURLs() {
                     { "message": "User has entered " + urlCount.length + correct_tense }
                 )
                 swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
+                processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
             } else {
                 $.post(
                     '/log/error',
@@ -169,6 +169,23 @@ function addUrl(_url) {
         { "url": _url },
         function (data) {
             console.log(data)
+            $("div#vli-videos").append(`
+                <div class="video-con" video="${data['url']}">
+                    <div class="index title">${data['count']}</div>
+                    <div class="thumb">
+                        <img src="${data['thumbnail']}" alt="">
+                    </div>
+                    <div class="v-titles">
+                        <div class="title"> ${data['title']}</div>
+                        <div class="sub-title">
+                            <a href="https://www.youtube.com/channel/${data['by']['id']}" class="channel"
+                                target="_blank">
+                                    ${data['by']['name']}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                `)
         }
     )
 }
@@ -205,7 +222,7 @@ function processVideoURLSandAdd(text_ = "", show_popups = false) {
         } else {
             if (__textSplitted.length == 1) { // no proper url warning
                 if (show_popups == true) {
-                    swal("an Error has occured", "The URL you provided has already been added", "error");
+                    swal("an Error has occured", "The URL you provided is not valid", "error");
                 }
             }
         }
@@ -224,11 +241,11 @@ $(document).ready(function () {
     // enter link
     $(document).on("click", "a#addNewVideoButton, a#addNewVideoDropdown",
         function () {
-            // inputVideoURLs();
-            // URL_TEXT = 'https://hirusha.xyz'
-            // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
+            inputVideoURLs();
 
-            addUrl('https://www.youtube.com/watch?v=SA7AIQw-7Ms')
+            // Why the F doesn't thing work? - it works when inside `inputVideoURLs()`
+            // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
+            // addUrl('')
         }
     )
 
@@ -237,6 +254,7 @@ $(document).ready(function () {
         function () {
             pasteURLs();
             console.log(URL_TEXT);
+            // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
         }
     )
 
