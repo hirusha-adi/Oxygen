@@ -159,7 +159,19 @@ var autoImportURLs = setInterval(
     5000
 )
 
-function addUrl() { }
+function addUrl(_url) {
+    $.post(
+        '/log/debug',
+        { "message": "Adding video: " + _url }
+    )
+    $.post(
+        '/add/url',
+        { "url": _url },
+        function (data) {
+            console.log(data)
+        }
+    )
+}
 
 function processVideoURLSandAdd(text_ = "", show_popups = false) {
     var final_to_add = []
@@ -215,7 +227,8 @@ $(document).ready(function () {
             // inputVideoURLs();
             // URL_TEXT = 'https://hirusha.xyz'
             // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
-            socket.send('HIRUSHA')
+
+            addUrl('https://www.youtube.com/watch?v=SA7AIQw-7Ms')
         }
     )
 
