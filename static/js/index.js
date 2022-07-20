@@ -66,7 +66,6 @@ function inputVideoURLs() {
 }
 
 
-
 // return value of clipboard
 // does NOT set to any var, just returns
 function getClipboard(show_popups = false) {
@@ -135,6 +134,7 @@ function pasteURLs() {
     return text
 }
 
+
 // monitor the clipboard for changes and if a url, add it
 function autoImportURLsFunc() {
     if (autoImportingStatus == true) {
@@ -163,6 +163,8 @@ var autoImportURLs = setInterval(
     5000
 )
 
+
+// add video to ui
 function addUrl(_url) {
     $.post(
         '/log/debug',
@@ -173,7 +175,8 @@ function addUrl(_url) {
         { "url": _url },
         function (data) {
             console.log(data)
-            $("div#vli-videos").append(`
+            if (data['site'] == 'youtube') {
+                $("div#vli-videos").append(`
                 <div class="video-con" video="${data['url']}" id="main${data['url']}">
                     <div class="index title">${ADDED_LIST.length + 1}</div>
                     <div class="thumb">
@@ -205,15 +208,22 @@ function addUrl(_url) {
                                 >
                                     View More
                             </a>
+                            &nbsp;|&nbsp;
+                            <a class="channel" link=${data['url']}>
+                                    Download
+                            </a>
                         </div>
                 </div>
                 `)
+            }
 
 
         }
     )
 }
 
+
+// process video and add
 function processVideoURLSandAdd(text_ = "", show_popups = false) {
     var final_to_add = []
     var __text = ""
@@ -259,6 +269,8 @@ function processVideoURLSandAdd(text_ = "", show_popups = false) {
     final_to_add = []
 }
 
+
+// view additional video information
 function viewMoreDetailsOnVideo(identifier) {
 
     const count = $(identifier).attr('count')
@@ -276,7 +288,6 @@ function viewMoreDetailsOnVideo(identifier) {
         const duration = $(identifier).attr('duration')
         const published = $(identifier).attr('published')
         const views = $(identifier).attr('views')
-
         swal(
             {
                 title: `${count} | ${title}`,
@@ -296,6 +307,14 @@ function viewMoreDetailsOnVideo(identifier) {
 
 
 }
+
+// quality select in popup and download
+function selectQualityAndDownload(identifier) {
+    const link = $(identifier).attr('link')
+    return
+
+}
+
 
 // main jquery code
 $(document).ready(function () {
