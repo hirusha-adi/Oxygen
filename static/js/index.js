@@ -319,8 +319,8 @@ function selectQualityAndDownload(identifier) {
 
     swal(
         {
-            title: "Add New Videos",
-            text: "Enter video URLs in seperate lines",
+            title: "Select Download Quality",
+            text: "1 - 240p\n2 - 360p\n3 - 480p\n4 - 720p\n5 - 1080p\n6 - 1440p\n7 - 2160p\nmp3",
             type: "input",
             showCancelButton: true,
             closeOnConfirm: false,
@@ -443,13 +443,23 @@ function selectQualityAndDownload(identifier) {
                     quality = "720p"
                 }
                 swal("Downloading!", "Downloading video with " + quality, "success");
+                downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
             }
         }
     );
 
     // send request to backend and start downloading the video
     // change the download text to downloading...
+}
 
+function downloadVideoWithFinalQuality(url_, quality_) {
+    $.post(
+        '/download',
+        {
+            "url": url_,
+            "quality": quality_
+        },
+    )
 }
 
 
@@ -489,5 +499,4 @@ $(document).ready(function () {
             }
         }
     )
-
 })
