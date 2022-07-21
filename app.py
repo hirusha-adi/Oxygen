@@ -66,17 +66,21 @@ def download():
     quality = request.form.get('quality')
 
     qualities = {
-        '240p': '',
-        '360p': '',
-        '480p': '',
-        '720p': '',
-        '1080p': '',
-        '1440p': '',
-        '2160p': '',
-        'audio': '',
+        '240p': 'bestvideo[height<=240]+bestaudio/best[height<=240]',
+        '360p': 'bestvideo[height<=360]+bestaudio/best[height<=360]',
+        '480p': 'bestvideo[height<=480]+bestaudio/best[height<=480]',
+        '720p': 'bestvideo[height<=720]+bestaudio/best[height<=720]',  # 22
+        '1080p': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
+        '1440p': 'bestvideo[height<=1440]+bestaudio/best[height<=1440]',
+        '2160p': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]'
     }
+    if quality != 'audio':
+        os.system(
+            f"""youtube-dl -F "{qualities[quality]}" "{url}" --verbose""")
+    else:
+        os.system(
+            f"""youtube-dl "{url}" -f "bestaudio/best" -ciw -v --extract-audio --audio-quality 0 --audio-format mp3 """)
 
-    os.system(f"""youtube-dl -F {qualities[quality]} "{url}" --verbose""")
     return "done"
 
 
