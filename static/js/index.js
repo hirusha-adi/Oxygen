@@ -443,6 +443,7 @@ function selectQualityAndDownload(identifier) {
                     quality = "720p"
                 }
                 swal("Downloading!", "Downloading video with " + quality, "success");
+                $(identifier).val('Downloading...')
                 downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
             }
         }
