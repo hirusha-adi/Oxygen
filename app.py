@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template, jsonify
 from flask import request
 from flask_socketio import SocketIO
-
+import os
 from youtubesearchpython import VideosSearch
 from youtube_dl import YoutubeDL
 
@@ -43,12 +43,12 @@ class Utils:
         return result
 
 
-@ app.route("/")
+@app.route("/")
 def index():
     return render_template("index.html")
 
 
-@ app.route("/log/<mode>", methods=['POST'])
+@app.route("/log/<mode>", methods=['POST'])
 def log(mode):
     message = request.form.get('message')
     if mode == "debug":
@@ -60,7 +60,27 @@ def log(mode):
     return "ok"
 
 
-@ app.route("/add/url", methods=['POST'])
+@app.route("/download", methods=['POST'])
+def download():
+    url = request.form.get('url')
+    quality = request.form.get('quality')
+
+    qualities = {
+        '240p': '',
+        '360p': '',
+        '480p': '',
+        '720p': '',
+        '1080p': '',
+        '1440p': '',
+        '2160p': '',
+        'audio': '',
+    }
+
+    os.system(f"""youtube-dl -F {qualities[quality]} "{url}" --verbose""")
+    return "done"
+
+
+@app.route("/add/url", methods=['POST'])
 def add_url():
     url = request.form.get('url')
     result = Utils.getVideInfo(url=url)
