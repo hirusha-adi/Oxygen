@@ -151,7 +151,7 @@ function autoImportURLsFunc() {
                 '/log/debug',
                 { "message": "New Clipboard Content" + CLIPBOARD_URL_TEXT }
             )
-            processVideoURLSandAdd(CLIPBOARD_URL_TEXT)
+            processVideoURLSandAdd(text_ = URL_TEXT, show_popups = false)
         }
     }
 }
