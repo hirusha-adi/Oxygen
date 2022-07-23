@@ -445,7 +445,7 @@ function selectQualityAndDownload(identifier) {
                 }
                 swal("Downloading!", "Downloading video with " + quality, "success");
                 $(identifier).text('Downloading...')
-                // downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
+                downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
             }
         }
     );
