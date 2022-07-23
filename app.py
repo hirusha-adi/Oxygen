@@ -76,7 +76,7 @@ def download():
     }
     if quality != 'audio':
         os.system(
-            f"""youtube-dl -F "{qualities[quality]}" "{url}" --verbose""")
+            f"""youtube-dl "{url}" -f "{qualities[quality]}" --verbose""")
     else:
         os.system(
             f"""youtube-dl "{url}" -f "bestaudio/best" -ciw --extract-audio --audio-quality 0 --audio-format mp3 --verbose """)
