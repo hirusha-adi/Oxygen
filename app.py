@@ -79,7 +79,7 @@ def download():
             f"""youtube-dl -F "{qualities[quality]}" "{url}" --verbose""")
     else:
         os.system(
-            f"""youtube-dl "{url}" -f "bestaudio/best" -ciw -v --extract-audio --audio-quality 0 --audio-format mp3 """)
+            f"""youtube-dl "{url}" -f "bestaudio/best" -ciw --extract-audio --audio-quality 0 --audio-format mp3 --verbose """)
 
     return "done"
 
