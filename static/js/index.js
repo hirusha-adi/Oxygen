@@ -68,7 +68,7 @@ function inputVideoURLs() {
 
 // return value of clipboard
 // does NOT set to any var, just returns
-function getClipboard(show_popups = false) {
+function getClipboard(show_popups = false, add_url = false) {
     try {
         navigator.clipboard.readText()
             .then(text => {
@@ -87,6 +87,10 @@ function getClipboard(show_popups = false) {
                     )
                     if (show_popups == true) {
                         swal("Video URLs", "You entered " + urlCount.length + correct_tense, "success");
+                    }
+                    URL_TEXT = text
+                    if (add_url == true) {
+                        processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true)
                     }
                     return text;
                 } else {
@@ -127,11 +131,7 @@ function getClipboard(show_popups = false) {
 // put clipboard value to main variable
 // if the output is correct
 function pasteURLs() {
-    text = getClipboard(show_popups = true)
-    if (text != false) {
-        URL_TEXT = text;
-    }
-    return text
+    text = getClipboard(show_popups = true, add_url = true)
 }
 
 
@@ -484,8 +484,6 @@ $(document).ready(function () {
     $(document).on("click", "a#pasteVideoLinkButton, a#pasteVideoLinkDropdown",
         function () {
             pasteURLs();
-            console.log(URL_TEXT);
-            processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true)
         }
     )
 
