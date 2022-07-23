@@ -336,7 +336,8 @@ function selectQualityAndDownload(identifier) {
 
             if (inputValue === false)
                 return false;
-            if ((validInputs.includes(inputValue) == false) || (qualities.includes(inputValue) == false) || (qualitiesP.includes(inputValue) == false)) {
+            // (validInputs.includes(inputValue) == false) || (qualities.includes(inputValue) == false) || (qualitiesP.includes(inputValue) == false)
+            if (1 == 5) {
                 swal.showInputError("Please enter a valid number!");
                 return false;
             } else {
