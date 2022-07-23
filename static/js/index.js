@@ -128,7 +128,7 @@ function getClipboard(show_popups = false) {
 // if the output is correct
 function pasteURLs() {
     text = getClipboard(show_popups = true)
-    if (URL_TEXT != false) {
+    if (text != false) {
         URL_TEXT = text;
     }
     return text
@@ -444,8 +444,8 @@ function selectQualityAndDownload(identifier) {
                     quality = "720p"
                 }
                 swal("Downloading!", "Downloading video with " + quality, "success");
-                $(identifier).val('Downloading...')
-                downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
+                $(identifier).text('Downloading...')
+                // downloadVideoWithFinalQuality(url_ = vlink, quality_ = quality)
             }
         }
     );
@@ -485,7 +485,7 @@ $(document).ready(function () {
         function () {
             pasteURLs();
             console.log(URL_TEXT);
-            // processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true);
+            processVideoURLSandAdd(text_ = URL_TEXT, show_popups = true)
         }
     )
 
